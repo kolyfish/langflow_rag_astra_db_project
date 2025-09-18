@@ -1,0 +1,37 @@
+{
+  "astra_db": {
+    "database_id": "ef4581e5-f997-44ce-8432-e56636786548",
+    "api_endpoint": "https://ef4581e5-f997-44ce-8432-e56636786548-us-east1.apps.astra.datastax.com",
+    "region": "us-east1",
+    "provider": "gcp",
+    "collections": {
+      "documents": {
+        "name": "documents",
+        "description": "文檔向量存儲集合",
+        "vector_metric": "dot_product",
+        "dimension": 1536,
+        "service": "openai"
+      },
+      "embeddings": {
+        "name": "embeddings", 
+        "description": "嵌入向量存儲集合",
+        "vector_metric": "cosine",
+        "dimension": 384,
+        "service": "sentence_transformers"
+      },
+      "knowledge_base": {
+        "name": "knowledge_base",
+        "description": "知識庫向量存儲",
+        "vector_metric": "dot_product", 
+        "dimension": 1536,
+        "service": "openai"
+      }
+    },
+    "settings": {
+      "batch_size": 100,
+      "max_retries": 3,
+      "timeout": 30,
+      "enable_logging": true
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "test_cases": [
+    {
+      "id": "question-001",
+      "name": "基礎問答測試",
+      "category": "question",
+      "input": "什麼是人工智慧？",
+      "expected_keywords": ["人工智慧", "AI", "機器學習", "智能"],
+      "description": "測試基本的問答功能"
+    },
+    {
+      "id": "question-002", 
+      "name": "技術問答測試",
+      "category": "question",
+      "input": "Python 和 JavaScript 有什麼區別？",
+      "expected_keywords": ["Python", "JavaScript", "程式語言", "差異"],
+      "description": "測試技術相關問題的回答"
+    },
+    {
+      "id": "analysis-001",
+      "name": "文字風格分析",
+      "category": "analysis", 
+      "input": "請分析這首詩的寫作風格和修辭手法：'春眠不覺曉，處處聞啼鳥。夜來風雨聲，花落知多少。'",
+      "expected_keywords": ["風格", "修辭", "詩歌", "分析"],
+      "description": "測試文學作品分析能力"
+    },
+    {
+      "id": "analysis-002",
+      "name": "商業數據分析",
+      "category": "analysis",
+      "input": "請分析以下銷售數據的趨勢：Q1: 100萬, Q2: 120萬, Q3: 110萬, Q4: 140萬",
+      "expected_keywords": ["趨勢", "分析", "銷售", "數據"],
+      "description": "測試商業數據分析能力"
+    },
+    {
+      "id": "translation-001",
+      "name": "英中翻譯測試",
+      "category": "translation",
+      "input": "請將以下英文翻譯成中文：'The future of artificial intelligence is bright and full of possibilities.'",
+      "expected_keywords": ["未來", "人工智慧", "光明", "可能性"],
+      "description": "測試英文到中文的翻譯"
+    },
+    {
+      "id": "translation-002",
+      "name": "中英翻譯測試", 
+      "category": "translation",
+      "input": "請將以下中文翻譯成英文：'科技改變世界，創新引領未來。'",
+      "expected_keywords": ["technology", "change", "world", "innovation"],
+      "description": "測試中文到英文的翻譯"
+    },
+    {
+      "id": "summary-001",
+      "name": "長文摘要測試",
+      "category": "summary",
+      "input": "請為以下長文創建摘要：'人工智慧（AI）是計算機科學的一個分支，旨在創建能夠執行通常需要人類智能的任務的機器。AI 包括機器學習、深度學習、自然語言處理、計算機視覺等多個領域。近年來，AI 技術快速發展，在醫療、金融、交通、教育等行業都有廣泛應用。然而，AI 的發展也帶來了一些挑戰，如就業影響、隱私保護、倫理問題等。未來，AI 將繼續發展，為人類社會帶來更多便利和機遇。'",
+      "expected_keywords": ["摘要", "人工智慧", "發展", "應用", "挑戰"],
+      "description": "測試長文摘要功能"
+    },
+    {
+      "id": "summary-002",
+      "name": "技術文檔摘要",
+      "category": "summary", 
+      "input": "請為以下技術文檔創建摘要：'React 是一個用於構建用戶界面的 JavaScript 庫。它由 Facebook 開發並開源。React 的主要特點包括虛擬 DOM、組件化開發、單向數據流等。React 使用 JSX 語法，讓開發者可以在 JavaScript 中編寫類似 HTML 的代碼。React 還提供了豐富的生態系統，包括 React Router、Redux、Next.js 等工具和框架。'",
+      "expected_keywords": ["React", "JavaScript", "組件", "虛擬DOM", "JSX"],
+      "description": "測試技術文檔摘要功能"
+    },
+    {
+      "id": "creative-001",
+      "name": "廣告文案創作",
+      "category": "creative",
+      "input": "請為一個環保主題的咖啡店寫一個創意的廣告文案",
+      "expected_keywords": ["環保", "咖啡", "創意", "廣告"],
+      "description": "測試創意廣告文案生成"
+    },
+    {
+      "id": "creative-002",
+      "name": "故事創作測試",
+      "category": "creative", 
+      "input": "請寫一個關於機器人和人類友誼的短故事",
+      "expected_keywords": ["機器人", "人類", "友誼", "故事"],
+      "description": "測試創意故事生成"
+    },
+    {
+      "id": "creative-003",
+      "name": "詩歌創作測試",
+      "category": "creative",
+      "input": "請寫一首關於春天的現代詩",
+      "expected_keywords": ["春天", "詩歌", "現代", "創作"],
+      "description": "測試詩歌創作能力"
+    },
+    {
+      "id": "mixed-001",
+      "name": "混合任務測試",
+      "category": "question",
+      "input": "請解釋什麼是區塊鏈技術，並分析它在金融領域的應用前景",
+      "expected_keywords": ["區塊鏈", "技術", "金融", "應用", "分析"],
+      "description": "測試複雜的混合任務處理"
+    }
+  ],
+  "performance_benchmarks": {
+    "max_response_time": 30,
+    "expected_accuracy": 0.85,
+    "min_response_length": 50,
+    "max_response_length": 2000
+  },
+  "test_environment": {
+    "langflow_version": "1.0.0",
+    "openai_model": "gpt-3.5-turbo",
+    "temperature": 0.7,
+    "max_tokens": 1000
+  }
+}

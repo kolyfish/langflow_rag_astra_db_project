@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "langflow": {
+      "command": "python",
+      "args": ["-m", "langflow", "run", "--mcp-server"],
+      "cwd": "C:\\Users\\WUYUEH\\cursor_project",
+      "env": {
+        "LANGFLOW_HOST": "localhost",
+        "LANGFLOW_PORT": "7860",
+        "LANGFLOW_DATABASE_URL": "sqlite:///./langflow.db"
+      }
+    }
+  }
+}

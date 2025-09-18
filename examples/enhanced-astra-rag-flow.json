@@ -1,0 +1,142 @@
+{
+  "name": "Enhanced Astra DB RAG Flow",
+  "description": "整合 Astra DB 的增強版 RAG 流程，支援多個 LLM 和向量存儲",
+  "data": {
+    "nodes": [
+      {
+        "id": "ChatInput-enhanced",
+        "type": "ChatInput",
+        "position": {
+          "x": 100,
+          "y": 100
+        },
+        "data": {
+          "label": "用戶輸入",
+          "placeholder": "請輸入您的問題...",
+          "multiline": true
+        }
+      },
+      {
+        "id": "AstraVectorStore-astra1",
+        "type": "AstraVectorStore",
+        "position": {
+          "x": 400,
+          "y": 300
+        },
+        "data": {
+          "label": "Astra DB Vector Store",
+          "database_id": "ef4581e5-f997-44ce-8432-e56636786548",
+          "collection_name": "langflow_documents",
+          "embedding_dimension": 1536,
+          "metric": "cosine",
+          "api_endpoint": "https://ef4581e5-f997-44ce-8432-e56636786548-us-east1.apps.astra.datastax.com",
+          "region": "us-east1",
+          "provider": "gcp"
+        }
+      },
+      {
+        "id": "Router-llm_selector",
+        "type": "Router",
+        "position": {
+          "x": 600,
+          "y": 300
+        },
+        "data": {
+          "label": "LLM 選擇器",
+          "routing_key": "llm_preference",
+          "routes": {
+            "grok": "GrokLLM-grok1",
+            "chatgpt": "OpenAIChat-chatgpt1"
+          }
+        }
+      },
+      {
+        "id": "GrokLLM-grok1",
+        "type": "GrokLLM",
+        "position": {
+          "x": 800,
+          "y": 200
+        },
+        "data": {
+          "label": "Grok AI 處理器",
+          "api_key": "YOUR_XAI_API_KEY_HERE",
+          "model": "grok-beta",
+          "temperature": 0.7,
+          "max_tokens": 1000,
+          "system_message": "你是一個基於 Astra DB 知識庫的智能助手，請根據提供的上下文回答用戶問題。"
+        }
+      },
+      {
+        "id": "OpenAIChat-chatgpt1",
+        "type": "OpenAIChat",
+        "position": {
+          "x": 800,
+          "y": 400
+        },
+        "data": {
+          "label": "ChatGPT 處理器",
+          "api_key": "YOUR_OPENAI_API_KEY_HERE",
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7,
+          "max_tokens": 1000,
+          "system_message": "你是一個基於 Astra DB 知識庫的智能助手，請根據提供的上下文回答用戶問題。"
+        }
+      },
+      {
+        "id": "ChatOutput-enhanced",
+        "type": "ChatOutput",
+        "position": {
+          "x": 1200,
+          "y": 300
+        },
+        "data": {
+          "label": "AI 回答輸出"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge-input-to-vector",
+        "source": "ChatInput-enhanced",
+        "target": "AstraVectorStore-astra1",
+        "sourceHandle": "message",
+        "targetHandle": "query"
+      },
+      {
+        "id": "edge-vector-to-router",
+        "source": "AstraVectorStore-astra1",
+        "target": "Router-llm_selector",
+        "sourceHandle": "documents",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-router-to-grok",
+        "source": "Router-llm_selector",
+        "target": "GrokLLM-grok1",
+        "sourceHandle": "grok",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-router-to-chatgpt",
+        "source": "Router-llm_selector",
+        "target": "OpenAIChat-chatgpt1",
+        "sourceHandle": "chatgpt",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-grok-to-output",
+        "source": "GrokLLM-grok1",
+        "target": "ChatOutput-enhanced",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-chatgpt-to-output",
+        "source": "OpenAIChat-chatgpt1",
+        "target": "ChatOutput-enhanced",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      }
+    ]
+  }
+}

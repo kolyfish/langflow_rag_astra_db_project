@@ -1,0 +1,228 @@
+{
+  "name": "智能助手流程",
+  "description": "一個使用 Langflow MCP 的智能助手案例，可以處理文字分析、問答和任務執行",
+  "data": {
+    "nodes": [
+      {
+        "id": "input-1",
+        "type": "TextInput",
+        "position": { "x": 100, "y": 100 },
+        "data": {
+          "label": "用戶輸入",
+          "placeholder": "請輸入您的問題或任務...",
+          "multiline": true,
+          "value": ""
+        }
+      },
+      {
+        "id": "classifier-1",
+        "type": "OpenAIFunction",
+        "position": { "x": 400, "y": 100 },
+        "data": {
+          "label": "任務分類器",
+          "function_name": "classify_task",
+          "description": "分析用戶輸入並分類任務類型",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "task_type": {
+                "type": "string",
+                "enum": ["question", "analysis", "translation", "summary", "creative"],
+                "description": "任務類型"
+              },
+              "language": {
+                "type": "string",
+                "description": "輸入語言"
+              },
+              "complexity": {
+                "type": "string",
+                "enum": ["simple", "medium", "complex"],
+                "description": "任務複雜度"
+              }
+            }
+          }
+        }
+      },
+      {
+        "id": "question-handler",
+        "type": "OpenAIChat",
+        "position": { "x": 700, "y": 50 },
+        "data": {
+          "label": "問答處理器",
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7,
+          "max_tokens": 500,
+          "system_message": "你是一個友善且知識豐富的助手，請回答用戶的問題。"
+        }
+      },
+      {
+        "id": "analysis-handler",
+        "type": "OpenAIChat",
+        "position": { "x": 700, "y": 150 },
+        "data": {
+          "label": "分析處理器",
+          "model": "gpt-4",
+          "temperature": 0.3,
+          "max_tokens": 1000,
+          "system_message": "你是一個專業的分析師，請對用戶提供的內容進行深入分析。"
+        }
+      },
+      {
+        "id": "translation-handler",
+        "type": "OpenAIChat",
+        "position": { "x": 700, "y": 250 },
+        "data": {
+          "label": "翻譯處理器",
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.1,
+          "max_tokens": 800,
+          "system_message": "你是一個專業的翻譯員，請準確翻譯用戶提供的內容。"
+        }
+      },
+      {
+        "id": "summary-handler",
+        "type": "OpenAIChat",
+        "position": { "x": 700, "y": 350 },
+        "data": {
+          "label": "摘要處理器",
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.2,
+          "max_tokens": 300,
+          "system_message": "你是一個專業的摘要專家，請為用戶提供的內容創建簡潔明瞭的摘要。"
+        }
+      },
+      {
+        "id": "creative-handler",
+        "type": "OpenAIChat",
+        "position": { "x": 700, "y": 450 },
+        "data": {
+          "label": "創意處理器",
+          "model": "gpt-4",
+          "temperature": 0.9,
+          "max_tokens": 1200,
+          "system_message": "你是一個富有創意的助手，請為用戶提供創意性的內容和建議。"
+        }
+      },
+      {
+        "id": "router-1",
+        "type": "Router",
+        "position": { "x": 550, "y": 100 },
+        "data": {
+          "label": "任務路由器",
+          "routing_key": "task_type"
+        }
+      },
+      {
+        "id": "output-1",
+        "type": "TextOutput",
+        "position": { "x": 1000, "y": 250 },
+        "data": {
+          "label": "最終輸出",
+          "value": ""
+        }
+      },
+      {
+        "id": "logger-1",
+        "type": "Logger",
+        "position": { "x": 1000, "y": 100 },
+        "data": {
+          "label": "執行日誌",
+          "log_level": "INFO"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "id": "edge-1",
+        "source": "input-1",
+        "target": "classifier-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-2",
+        "source": "classifier-1",
+        "target": "router-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-3",
+        "source": "router-1",
+        "target": "question-handler",
+        "sourceHandle": "question",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-4",
+        "source": "router-1",
+        "target": "analysis-handler",
+        "sourceHandle": "analysis",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-5",
+        "source": "router-1",
+        "target": "translation-handler",
+        "sourceHandle": "translation",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-6",
+        "source": "router-1",
+        "target": "summary-handler",
+        "sourceHandle": "summary",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-7",
+        "source": "router-1",
+        "target": "creative-handler",
+        "sourceHandle": "creative",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-8",
+        "source": "question-handler",
+        "target": "output-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-9",
+        "source": "analysis-handler",
+        "target": "output-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-10",
+        "source": "translation-handler",
+        "target": "output-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-11",
+        "source": "summary-handler",
+        "target": "output-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-12",
+        "source": "creative-handler",
+        "target": "output-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      },
+      {
+        "id": "edge-13",
+        "source": "classifier-1",
+        "target": "logger-1",
+        "sourceHandle": "output",
+        "targetHandle": "input"
+      }
+    ]
+  }
+}
