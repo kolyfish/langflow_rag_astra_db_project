@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp"],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem", "/path/to/your/project"],
+      "env": {}
+    },
+    "memory": {
+      "command": "npx", 
+      "args": ["@modelcontextprotocol/server-memory"],
+      "env": {}
+    }
+  }
+}
